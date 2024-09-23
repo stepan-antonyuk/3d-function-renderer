@@ -7,13 +7,12 @@ class Triangle():
         self.triangle = np.asarray([[0, 1, 2]])
 
 class GenericObject():
-    def __init__ (self, pos, angle=(0.0, 0.0, 1.0), triangles=[]):
+    def __init__ (self, pos, triangles=[]):
         self.pos = pos
         self.shape = triangles
-        self.angle = angle
 
 class Plane(GenericObject):
-    def __init__ (self, pos, angle=(0.0, 0.0, 1.0)):
+    def __init__ (self, pos):
         shape = [
             Triangle(
                 (1.0, 1.0, 0.0, 1, 1),
@@ -26,6 +25,6 @@ class Plane(GenericObject):
                 (-1.0, 1.0, 0.0, 1, 1),
             ),
         ]
-        super(Plane, self).__init__(pos, angle, shape)
+        super(Plane, self).__init__(pos, shape)
     
 

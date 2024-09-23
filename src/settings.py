@@ -37,6 +37,8 @@ TRANSLATION_MAP = {
             pygame.K_a: MoveCameraAction((0.0, 0.0, -1.0)),
             pygame.K_LEFT: TurnYawCameraAction(-1),
             pygame.K_RIGHT: TurnYawCameraAction(1),
+            pygame.K_DOWN: TurnPitchCameraAction(1),
+            pygame.K_UP: TurnPitchCameraAction(-1),
         },
         'key_not_pressed': {
             # add some methods that are executed when key is not pressed

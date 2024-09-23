@@ -44,7 +44,7 @@ class AddBlockAction(Action):
         pass
 
 
-class MoveCameraAction(Action):  # normalized movement, can even work with joystick.
+class MoveCameraAction(Action):
     def __init__(self, direction):
         self.direction = direction
 
@@ -57,10 +57,18 @@ class MoveCameraAction(Action):  # normalized movement, can even work with joyst
         )
 
 
-class TurnYawCameraAction(Action):  # normalized movement, can even work with joystick.
+class TurnYawCameraAction(Action):
     def __init__(self, direction):
         self.direction = direction
 
     def change_world(self, world, render):
         world.camera.yaw += 0.05 * self.direction
+
+
+class TurnPitchCameraAction(Action):
+    def __init__(self, direction):
+        self.direction = direction
+
+    def change_world(self, world, render):
+        world.camera.pitch += 0.05 * self.direction
 

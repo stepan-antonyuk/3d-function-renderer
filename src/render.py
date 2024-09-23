@@ -52,8 +52,6 @@ class Renderer:
             v_angle = (v_angle_camera_point - camera.pitch)%(2*np.pi)
             if v_angle > np.pi: v_angle =  v_angle - 2*np.pi
             
-            if v_angle > np.pi: v_angle =  v_angle - 2*np.pi
-            
             point[4] = self.SCREEN_H*v_angle/self.FOV_Y + self.SCREEN_H/2
 
         return n_points

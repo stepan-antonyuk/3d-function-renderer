@@ -99,7 +99,7 @@ class Renderer:
         for obj in world.objects:
             for triangle in obj.shape:
                 points = self.project_points(triangle.points, world.camera)
-                trgl = triangle.triangle
+                trgl = triangle.triangles
                 for index in range(len(trgl)):
                     tmp = [points[trgl[index][0]][3:], points[trgl[index][1]][3:], points[trgl[index][2]][3:]]
                     color = [100, 35, 98]

@@ -4,7 +4,7 @@ import numpy as np
 class Triangle():
     def __init__ (self, point1, point2, point3):
         self.points = np.asarray([point1, point2, point3])
-        self.triangle = np.asarray([[0, 1, 2]])
+        self.triangles = np.asarray([[0, 1, 2]])
 
 class GenericObject():
     def __init__ (self, pos, triangles=[]):

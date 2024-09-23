@@ -15,8 +15,8 @@ class Renderer:
         self.color = (250,0,0)  # (250,250,250) and (0,0,0)
         self.line_thickness = 5
         self.MAX_DEPTH = 1000
-        self.SCREEN_W = 1000
-        self.SCREEN_H = 1000
+        self.SCREEN_W = abs(viewport[1][0] - viewport[0][0])
+        self.SCREEN_H = abs(viewport[1][1] - viewport[0][1])
         self.FOV_Y = np.pi/4
         self.FOV_X = self.FOV_Y * self.SCREEN_W / self.SCREEN_H
 
@@ -97,13 +97,12 @@ class Renderer:
         #print( tmp)
 
         for obj in world.objects:
-            for triangle in obj.shape:
-                points = self.project_points(triangle.points, world.camera)
-                trgl = triangle.triangles
-                for index in range(len(trgl)):
-                    tmp = [points[trgl[index][0]][3:], points[trgl[index][1]][3:], points[trgl[index][2]][3:]]
-                    color = [100, 35, 98]
-                    pygame.draw.polygon(self.screen, color, tmp)
+            points = self.project_points(obj.points, world.camera)
+            triangles = obj.triangles
+            for index in range(len(triangles)):
+                tmp = [points[triangles[index][0]][3:], points[triangles[index][1]][3:], points[triangles[index][2]][3:]]
+                color = [100, 35, 98]
+                pygame.draw.polygon(self.screen, color, tmp)
                 
                     
 

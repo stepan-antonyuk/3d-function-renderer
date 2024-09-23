@@ -11,7 +11,7 @@ clock = pygame.time.Clock()
 pygame.init()
 
 # pygame.display.init()  # initialization of display
-display = (1000,1000)  # display
+display = (800,600)  # display
 screen = pygame.display.set_mode(display)
 surface = pygame.Surface(display)
 

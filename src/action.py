@@ -1,3 +1,4 @@
+import numpy as np
 from world import World
 from render import Renderer
 
@@ -50,10 +51,23 @@ class MoveCameraAction(Action):
 
     def change_world(self, world, render):
         x, y, z = world.camera.pos
+
+        dx, dy, dz = 0, 0, 0
+        speed = 0.05
+
+        if self.direction[0] != 0:
+            dx = np.cos(world.camera.yaw) * self.direction[0] * speed
+            dz = np.sin(world.camera.yaw) * self.direction[0] * speed
+        elif self.direction[2] != 0:
+            dx = np.sin(world.camera.yaw) * -self.direction[2] * speed
+            dz = np.cos(world.camera.yaw) * self.direction[2] * speed
+        elif self.direction[1] != 0:
+            dy = self.direction[1] * -speed
+
         world.camera.pos = (
-            x + self.direction[0],
-            y + self.direction[1],
-            z + self.direction[2],
+            x + dx,
+            y + dy,
+            z + dz,
         )
 
 

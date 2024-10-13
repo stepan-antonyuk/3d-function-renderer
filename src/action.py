@@ -57,12 +57,12 @@ class MoveCameraAction(Action):
 
         if self.direction[0] != 0:
             dx = np.cos(world.camera.yaw) * self.direction[0] * speed
-            dz = np.sin(world.camera.yaw) * self.direction[0] * speed
-        elif self.direction[2] != 0:
-            dx = np.sin(world.camera.yaw) * -self.direction[2] * speed
-            dz = np.cos(world.camera.yaw) * self.direction[2] * speed
+            dy = np.sin(world.camera.yaw) * -self.direction[0] * speed
         elif self.direction[1] != 0:
-            dy = self.direction[1] * -speed
+            dx = np.cos(world.camera.yaw - np.pi/2) * -self.direction[1] * speed
+            dy = np.sin(world.camera.yaw - np.pi/2) * self.direction[1] * speed
+        elif self.direction[2] != 0:
+            dz = self.direction[2] * -speed
 
         world.camera.pos = (
             x + dx,
@@ -77,6 +77,10 @@ class TurnYawCameraAction(Action):
 
     def change_world(self, world, render):
         world.camera.yaw += 0.05 * self.direction
+        if world.camera.yaw > np.pi:
+             world.camera.yaw = -np.pi
+        elif world.camera.yaw < -np.pi:
+             world.camera.yaw = np.pi
 
 
 class TurnPitchCameraAction(Action):
@@ -85,4 +89,8 @@ class TurnPitchCameraAction(Action):
 
     def change_world(self, world, render):
         world.camera.pitch += 0.05 * self.direction
+        if world.camera.pitch > np.pi/2:
+             world.camera.pitch = np.pi/2
+        elif world.camera.pitch < -np.pi/2:
+             world.camera.pitch = -np.pi/2
 

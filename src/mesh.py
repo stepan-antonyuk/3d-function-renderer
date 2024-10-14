@@ -25,5 +25,5 @@ class Test(GenericObject):
     def __init__ (self, pos):
         points = np.asarray([[1, 1, 1, 1], [4, 2, 0, 1], [1, .5, 3, 1]])
         triangles = np.asarray([[0,1,2]])
-        #points, triangles = read_obj('teapot.obj')
+        points, triangles = read_obj('finfet.obj')
         super(Test, self).__init__(pos, points, triangles)

@@ -59,18 +59,63 @@ class Renderer:
     def point2screen(self, P, M, T, points):
         n_points = np.matrix.copy(points)
 
-        for i in range(len(n_points)):
-            tmp = np.dot(M, np.dot(T, n_points[i]).T)
-            tmp = (P @ tmp)
+        project = lambda p: (P @ (np.dot(M, np.dot(T, p).T)))
+        devide = lambda p: p/p[3]
+        n_points = np.array([project(pi) for pi in n_points])
+        n_points = np.array([devide(pi) for pi in n_points])
+        n_points[:,0] = ((n_points[:,0] + 1) * 0.5 * self.SCREEN_W)
+        n_points[:,1] = ((1 - (n_points[:,1] + 1) * 0.5) * self.SCREEN_H)
+        n_points = n_points.squeeze()
 
-            if tmp[3] != 1:
-                tmp = tmp/tmp[3]
+        #for i in range(len(n_points)):
+        #    tmp = np.dot(M, np.dot(T, n_points[i]).T)
+        #    tmp = (P @ tmp)
 
-            tmp[0] = ((tmp[0] + 1) * 0.5 * self.SCREEN_W)
-            tmp[1] = ((1 - (tmp[1] + 1) * 0.5) * self.SCREEN_H)
-            n_points[i] = tmp.T
+        #    if tmp[3] != 1:
+        #        tmp = tmp/tmp[3]
+
+        #    tmp[0] = ((tmp[0] + 1) * 0.5 * self.SCREEN_W)
+        #    tmp[1] = ((1 - (tmp[1] + 1) * 0.5) * self.SCREEN_H)
+        #    n_points[i] = tmp.T
 
         return n_points
+
+    def dot_3d(self, arr1, arr2):
+        return arr1[0]*arr2[0] + arr1[1]*arr2[1] + arr1[2]*arr2[2]
+
+    def sort_triangles(self, points, triangles, camera, z_order, shade):
+        light_dir = np.asarray([np.sin(pygame.time.get_ticks()/1000), 1, 1])
+        light_dir = light_dir/np.linalg.norm(light_dir)
+
+        for i in range(len(triangles)):
+            triangle = triangles[i]
+
+            # Use Cross-Product to get surface normal
+            vet1 = points[triangle[1]][:3]  - points[triangle[0]][:3]
+            vet2 = points[triangle[2]][:3] - points[triangle[0]][:3]
+
+            # backface culling with dot product between normal and camera ray
+            normal = np.cross(vet1, vet2)
+            normal = normal/np.sqrt(normal[0]*normal[0] + normal[1]*normal[1] + normal[2]*normal[2])
+
+            CameraRay = points[triangle[0]][:3] - camera.pos
+            dist2cam = np.sqrt(CameraRay[0]*CameraRay[0] + CameraRay[1]*CameraRay[1] + CameraRay[2]*CameraRay[2])
+            CameraRay = CameraRay/dist2cam
+
+            # get projected 2d points for filtering of offscreen triangles
+            xxs = np.asarray([points[triangle[0]][0:2][0],  points[triangle[1]][0:2][0],  points[triangle[2]][0:2][0]])
+            yys = np.asarray([points[triangle[0]][0:2][1],  points[triangle[1]][0:2][1],  points[triangle[2]][0:2][1]])
+
+            # check valid values
+            if (self.dot_3d(normal, CameraRay) < 0   and np.min(xxs) > - self.SCREEN_W and np.max(xxs) < 2*self.SCREEN_W and np.min(yys) > - self.SCREEN_H and np.max(yys) < 2*self.SCREEN_H):
+
+                z_order[i] = -dist2cam
+
+                # calculate shading, normalize, dot and to 0 - 1 range
+                shade[i] = 0.5*self.dot_3d(light_dir, normal) + 0.5
+
+            # big value for last positions in sort
+            else: z_order[i] = 9999
 
     def update(self, world):
         self.screen.fill((40, 40, 40))
@@ -150,13 +195,33 @@ class Renderer:
         pos_display = myFont.render(str((round(float(x), 2), round(float(y), 2), round(float(z), 2))), 1, (255, 255, 255))
         self.screen.blit(pos_display, (520, 30))
 
+
+        import time
         for obj in world.objects:
+            start = time.time()
             points = self.point2screen(P_view, R_view, T_view, obj.points)
+            end = time.time()
+            length = end - start
+            print("1 took", length, "seconds!")
+
             triangles = obj.triangles
-            for index in range(len(triangles)):
+
+            z_order = np.zeros(len(triangles))
+            shade = z_order.copy()
+            start = time.time()
+            self.sort_triangles(points, triangles, world.camera, z_order, shade)
+            end = time.time()
+            length = end - start
+            print("2 took", length, "seconds!")
+
+            color_scale = 230/np.max(np.abs(points))
+
+            #for index in range(len(triangles)):
+            for index in np.argsort(z_order):
+                if z_order[index] == 9999: break
                 tmp = [points[triangles[index][0]][0:2], points[triangles[index][1]][0:2], points[triangles[index][2]][0:2]]
-                print(tmp)
                 color = [100, 35, 98]
+                color = shade[index]*np.abs(points[triangles[index][0]][:3])*color_scale +25
                 pygame.draw.polygon(self.screen, color, tmp)
 
         #for obj in world.objects:

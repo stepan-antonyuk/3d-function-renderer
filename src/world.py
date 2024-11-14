@@ -1,4 +1,4 @@
-from mesh import Plane, Test
+from mesh import Plane, Test, Fun
 from camera import Camera
 
 
@@ -7,7 +7,7 @@ class World:
         self.mode = "map"
         self.gravity = -5
         self.camera = Camera((13.0, 0.5, 2))
-        self.objects = [Test((0, 0, 0))]
+        self.objects = [Fun((0, 0, 0))]
 
 
     def update(self):  # does something every frame, could be useful for enemy AI or update some values

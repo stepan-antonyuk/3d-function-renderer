@@ -39,7 +39,7 @@ class Fun(GenericObject):
         super(Fun, self).__init__(pos, points, triangles)
 
     def black_box(self, x, y):
-        return x**2 + y**2
+        return x**2 - y**2
 
     def gpt(self):
         points = []

@@ -24,6 +24,8 @@ This project is a **Python3-based 3D function renderer** built using the Pygame 
 
 To change function go to ```src/mesh.py``` and find ```black_box``` function.
 
+The function must be a well-defined mathematical function, meaning it should return a single \(z\)-value for each pair of \((x, y)\) coordinates. Additionally, the function must avoid undefined behavior, such as division by zero, to ensure accurate and stable rendering.
+
 ```python
 def black_box(self, x, y):
     return <put some function here>

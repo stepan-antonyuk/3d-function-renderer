@@ -61,7 +61,7 @@ Here are some example visualizations created with the 3D Function Renderer:
 #### Visualization of \(x^2 - y^2\) with self.minp = [-2,-2,0] self.maxp = [2,2,2] self.stepx = 0.2 self.stepy = 0.2
 ![x^2 - y^2](imgs/Screenshot%202024-12-02%20204730.png)
 
-#### Visualization of \(x^2 - y^2\) with self.minp = [0,0,0] self.maxp = [2,2,2] self.stepx = 0.2 self.stepy = 0.2
+#### Visualization of \(x^2 - y^2\) with self.minp = [0,0,0] self.maxp = [2,2,2] self.stepx = 0.1 self.stepy = 0.1
 ![x^2 - y^2](imgs/Screenshot%202024-12-02%20204912.png)
 
 ---

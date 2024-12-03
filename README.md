@@ -12,6 +12,18 @@ This project is a **Python3-based 3D function renderer** built using the Pygame 
 
 ---
 
+## Examples
+
+Here are some example visualizations created with the 3D Function Renderer:
+
+### Visualization of \(x^2 - y^2\)
+![x^2 - y^2](imgs/Screenshot%202024-12-02%20194112.png)
+
+### Visualization of \(x^2 + y^2\)
+![x^2 + y^2](imgs/Screenshot%202024-12-02%20194240.png)
+
+---
+
 ## Achievements
 
 This project demonstrates the power of combining mathematical computation with basic graphics rendering. **Here are some of the highlights of what was achieved:**

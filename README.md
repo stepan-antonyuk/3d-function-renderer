@@ -5,6 +5,8 @@
 ## Links
 
  [Install](#installation-for-developers)
+ 
+ [Keybinds](#keybinds)
 
 ## Overview
 
@@ -109,6 +111,23 @@ pip install -r requirements
 ```bash
 python3 src/main.py
 ```
+
+---
+
+## Keybinds
+
+The keybinds can be found in ```src/settings.py```
+- w: to move forward
+- s: to move backward
+- a: to move to the left
+- d: to move to the right
+- q: to move up
+- r: to move down
+- e: to change mode (can be used for somthing else), not used right now. If for some reason you can't move and turn it is likely you pressed e key. To fix it, just press e key again.
+- up-arrow: look up
+- down-arrow: look down
+- left-arrow: turn left
+- rught-arrow: turn right
 
 ---
 

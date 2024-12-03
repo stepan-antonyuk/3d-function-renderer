@@ -12,15 +12,57 @@ This project is a **Python3-based 3D function renderer** built using the Pygame 
 
 ---
 
-## Examples
+## Functions
+
+To change function go to ```src/mesh.py``` and find ```black_box``` function.
+
+```python
+def black_box(self, x, y):
+    return <put some function here>
+```
+
+### Examples
 
 Here are some example visualizations created with the 3D Function Renderer:
 
-### Visualization of \(x^2 - y^2\)
+#### Visualization of \(x^2 - y^2\)
 ![x^2 - y^2](imgs/Screenshot%202024-12-02%20194112.png)
 
-### Visualization of \(x^2 + y^2\)
+#### Visualization of \(x^2 + y^2\)
 ![x^2 + y^2](imgs/Screenshot%202024-12-02%20194240.png)
+
+---
+
+## Grid and Step size
+
+To change grid or/and step size go to ```src/mesh.py``` and find class ```Fun```. Go to its init. Find parameters ```self.minp``` and ```self.maxp```. These are limits for x and y.
+For example, ```self.minp = [-2, -3, 0]``` means that x has min limit of -2 and y has a limit of -3, z has no limit doesn't matter the number. To change step size you will need to change ```self.stepx``` and ```self.stepy```. Which will change step size taken in x and y direction.
+
+```python
+class Fun(GenericObject):
+    def __init__ (self, pos):
+        self.minp = [-2,-2,0]
+        self.maxp = [2,2,2]
+        self.stepx = 0.2
+        self.stepy = 0.2
+
+```
+
+### Examples
+
+Here are some example visualizations created with the 3D Function Renderer:
+
+#### Visualization of \(x^2 - y^2\) with self.minp = [-2,-2,0] self.maxp = [2,2,2] self.stepx = 0.8 self.stepy = 0.8
+![x^2 - y^2](imgs/Screenshot%202024-12-02%20204608.png)
+
+#### Visualization of \(x^2 - y^2\) with self.minp = [-2,-2,0] self.maxp = [2,2,2] self.stepx = 0.4 self.stepy = 0.4
+![x^2 - y^2](imgs/Screenshot%202024-12-02%20194112.png)
+
+#### Visualization of \(x^2 - y^2\) with self.minp = [-2,-2,0] self.maxp = [2,2,2] self.stepx = 0.2 self.stepy = 0.2
+![x^2 - y^2](imgs/Screenshot%202024-12-02%20204730.png)
+
+#### Visualization of \(x^2 - y^2\) with self.minp = [0,0,0] self.maxp = [2,2,2] self.stepx = 0.2 self.stepy = 0.2
+![x^2 - y^2](imgs/Screenshot%202024-12-02%20204912.png)
 
 ---
 
